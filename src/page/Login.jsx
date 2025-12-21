@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { signUp } from "../services/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { CrossedEyeIcon, EyeIcon, LoadingIcon } from "../component/Icons";
 import { toast } from "react-toastify";
+import { signIn } from "../services/auth";
 
 const schema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Enter a valid email"),
   password: z
     .string()
@@ -22,7 +21,7 @@ const schema = z.object({
     ),
 });
 
-export default function SignUp() {
+export default function Login() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,13 +38,16 @@ export default function SignUp() {
     console.log(data);
     setIsSubmitting(true);
     try {
-      await signUp(data);
-      toast.success("Account created successfully. Please login!");
-      reset();
-      navigate("/login");
+      const res = await signIn(data);
+      debugger;
+      const token = res?.data?.token;
+      localStorage.setItem("token", token);
+      //   TODO: add navigation logic
+      //   reset();
+      //   navigate("/");
     } catch (error) {
-      console.log(`Error in signing in user: ${error}`);
-      toast.error("Sign up failed. Please try again");
+      console.log(`Error in logging in: ${error}`);
+      toast.error("Log in failed. Please try again");
     } finally {
       setIsSubmitting(false);
     }
@@ -57,41 +59,12 @@ export default function SignUp() {
         <div className="bg-white rounded-xl shadow-xl p-8 md:p-12 border border-gray-100">
           <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-              Create Account
+              Log in
             </h1>
-            <p className="text-gray-600 text-sm">
-              Sign up to get started with your account
-            </p>
+            <p className="text-gray-600 text-sm">Sign in to your account</p>
           </div>
 
           <form onSubmit={handleSubmit(submitHandler)} className="space-y-5">
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-semibold text-gray-700 mb-2"
-              >
-                Full Name
-              </label>
-              <div className="relative">
-                <input
-                  id="name"
-                  type="text"
-                  {...register("name")}
-                  placeholder="Enter your full name"
-                  className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-0 ${
-                    errors?.name
-                      ? "border-red-300 focus:border-red-500 bg-red-50"
-                      : "border-gray-200 focus:border-indigo-500 bg-gray-50 focus:bg-white"
-                  }`}
-                />
-              </div>
-              {errors?.name?.message && (
-                <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
-                  {errors.name.message}
-                </p>
-              )}
-            </div>
-
             <div>
               <label
                 htmlFor="email"
@@ -131,7 +104,7 @@ export default function SignUp() {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
-                  placeholder="Create a strong password"
+                  placeholder="Enter your password"
                   className={`w-full px-4 py-3 pr-12 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-0 ${
                     errors?.password
                       ? "border-red-300 focus:border-red-500 bg-red-50"
@@ -165,22 +138,22 @@ export default function SignUp() {
               {isSubmitting ? (
                 <>
                   <LoadingIcon style="animate-spin h-5 w-5" />
-                  <span>Creating Account...</span>
+                  <span>Logging in...</span>
                 </>
               ) : (
-                "Create Account"
+                "Log in"
               )}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              Already have an account?{" "}
+              Don't have an account?{" "}
               <Link
-                to="/login"
+                to="/register"
                 className="font-semibold text-indigo-600 hover:text-indigo-700 transition-colors"
               >
-                Sign in
+                Sign up
               </Link>
             </p>
           </div>
