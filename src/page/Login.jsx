@@ -39,7 +39,6 @@ export default function Login() {
     setIsSubmitting(true);
     try {
       const res = await signIn(data);
-      debugger;
       const token = res?.data?.token;
       localStorage.setItem("token", token);
       //   TODO: add navigation logic

@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignUp from "./page/SignUp";
 import Login from "./page/Login";
 import { Flip, ToastContainer } from "react-toastify";
+import GenerateImage from "./page/GenerateImage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/" element={<div>home</div>}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<SignUp />}></Route>
+        <Route path="/image/generate" element={<GenerateImage />}></Route>
       </Routes>
     </BrowserRouter>
   );
