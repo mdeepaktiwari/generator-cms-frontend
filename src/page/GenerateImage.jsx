@@ -11,6 +11,7 @@ import {
   ImageIcon,
   LoadingIcon,
 } from "../component/Icons";
+import { downloadImage } from "../utils/global";
 
 const schema = z.object({
   resolution: z.string().min(1, "Please select a resolution"),
@@ -167,6 +168,10 @@ export default function GenerateImage() {
                 </div>
                 <div className="flex gap-3">
                   <a
+                    onClick={(e) => {
+                      e.preventDefault();
+                      downloadImage(generatedImage);
+                    }}
                     href={generatedImage}
                     download
                     className="flex-1 bg-indigo-600 text-white py-2.5 px-4 rounded-lg font-semibold text-sm hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2"
