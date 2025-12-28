@@ -7,6 +7,7 @@ import SignUp from "./page/SignUp";
 import Login from "./page/Login";
 import { Flip, ToastContainer } from "react-toastify";
 import GenerateImage from "./page/GenerateImage";
+import Rewrite from "./page/Rewrite";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<SignUp />}></Route>
         <Route path="/image/generate" element={<GenerateImage />}></Route>
+        <Route path="/content/rewrite" element={<Rewrite />}></Route>
       </Routes>
     </BrowserRouter>
   );
