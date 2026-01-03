@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { CrossedEyeIcon, EyeIcon, LoadingIcon } from "../component/Icons";
 import { toast } from "react-toastify";
 import { signIn } from "../services/auth";
+import { useAuth } from "../context/auth";
 
 const schema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -23,8 +24,10 @@ const schema = z.object({
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login, isAuthenticated } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -34,16 +37,24 @@ export default function Login() {
     resolver: zodResolver(schema),
   });
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
   const submitHandler = async (data) => {
     console.log(data);
     setIsSubmitting(true);
     try {
       const res = await signIn(data);
       const token = res?.data?.token;
-      localStorage.setItem("token", token);
-      //   TODO: add navigation logic
-      //   reset();
-      //   navigate("/");
+      const name = res?.data?.name;
+      if (token) {
+        login(token, name);
+        reset();
+        navigate("/");
+      }
     } catch (error) {
       console.log(`Error in logging in: ${error}`);
       toast.error("Log in failed. Please try again");

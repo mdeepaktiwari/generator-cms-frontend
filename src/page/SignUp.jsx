@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -6,6 +6,7 @@ import { signUp } from "../services/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { CrossedEyeIcon, EyeIcon, LoadingIcon } from "../component/Icons";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/auth";
 
 const schema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -24,6 +25,7 @@ const schema = z.object({
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
@@ -34,6 +36,12 @@ export default function SignUp() {
   } = useForm({
     resolver: zodResolver(schema),
   });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const submitHandler = async (data) => {
     console.log(data);
