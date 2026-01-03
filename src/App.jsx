@@ -9,6 +9,8 @@ import { Flip, ToastContainer } from "react-toastify";
 import GenerateImage from "./page/GenerateImage";
 import Rewrite from "./page/Rewrite";
 import ImageHistory from "./page/ImageHistory";
+import ContentHistory from "./page/ContentHistory";
+import ContentDetails from "./page/ContentDetails";
 
 function App() {
   return (
@@ -31,8 +33,10 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<SignUp />}></Route>
         <Route path="/image/generate" element={<GenerateImage />}></Route>
-        <Route path="/content/rewrite" element={<Rewrite />}></Route>
         <Route path="/image/history" element={<ImageHistory />}></Route>
+        <Route path="/content/rewrite" element={<Rewrite />}></Route>
+        <Route path="/content/history" element={<ContentHistory />}></Route>
+        <Route path="content-details/:id" element={<ContentDetails />}></Route>
       </Routes>
     </BrowserRouter>
   );

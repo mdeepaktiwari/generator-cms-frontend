@@ -1,3 +1,5 @@
+import { COLOR_MAP, DEFAULT_COLOR_TYPE } from "../constant";
+
 export const downloadImage = async (image) => {
   // if we don't have image url then return
   if (!image) return;
@@ -13,4 +15,13 @@ export const downloadImage = async (image) => {
   a.remove();
 
   window.URL.revokeObjectURL(url);
+};
+
+export const capitalizeWord = (str) => {
+  if (!str) return;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+export const getColorType = (type) => {
+  return COLOR_MAP[type] || COLOR_MAP[DEFAULT_COLOR_TYPE];
 };

@@ -6,6 +6,8 @@ import {
   ImageIcon,
   LoadingIcon,
 } from "../component/Icons";
+import moment from "moment";
+import { downloadImage } from "../utils/global";
 
 export default function ImageHistory() {
   const [isLoading, setIsLoading] = useState(true);
@@ -80,7 +82,7 @@ export default function ImageHistory() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {generatedImages.map((image, index) => (
               <div
-                key={image._id || index}
+                key={image._id || image.id || index}
                 className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
               >
                 <div className="relative bg-gray-50">
@@ -91,6 +93,10 @@ export default function ImageHistory() {
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-1 hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
                     <a
+                      onClick={(e) => {
+                        e.preventDefault();
+                        downloadImage(image.url);
+                      }}
                       href={image.url}
                       download
                       className="bg-white text-gray-900 px-4 py-2 rounded-lg font-semibold text-sm hover:bg-gray-100 transition-colors flex items-center gap-2"
@@ -104,7 +110,7 @@ export default function ImageHistory() {
                 <div className="p-4">
                   <div className="flex items-center justify-between mb-2">
                     <p className="text-xs text-gray-500 font-medium">
-                      {image.createdAt}
+                      {moment(image.createdAt).endOf("day").fromNow()}
                     </p>
                     <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full">
                       AI Generated
