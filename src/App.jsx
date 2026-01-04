@@ -3,7 +3,7 @@ import SignUp from "./page/SignUp";
 import Login from "./page/Login";
 import { Flip, ToastContainer } from "react-toastify";
 import GenerateImage from "./page/GenerateImage";
-import Rewrite from "./page/Rewrite";
+import GenerateContent from "./page/GenerateContent";
 import ImageHistory from "./page/ImageHistory";
 import ContentHistory from "./page/ContentHistory";
 import ContentDetails from "./page/ContentDetails";
@@ -68,10 +68,10 @@ function App() {
             }
           ></Route>
           <Route
-            path="/content/rewrite"
+            path="/content/:action"
             element={
               <ProtectedRoute>
-                <Rewrite />
+                <GenerateContent />
               </ProtectedRoute>
             }
           ></Route>
