@@ -6,6 +6,7 @@ import { Copy, ErrorIcon, LoadingIcon, WriteIcon } from "../component/Icons";
 import { toast } from "react-toastify";
 import { Navigate, useParams } from "react-router-dom";
 import { PAGES } from "../constant";
+import { handleCopy } from "../utils/global";
 
 const schema = z.object({
   content: z.string().min(1, "Content is required"),
@@ -30,16 +31,6 @@ export default function GenerateContent() {
   } = useForm({
     resolver: zodResolver(schema),
   });
-
-  const handleCopy = async () => {
-    if (!generatedContent) return;
-    try {
-      await window.navigator.clipboard.writeText(generatedContent);
-      toast.success("Content copied");
-    } catch (error) {
-      console.log(`Failed to copy. Error is ${error}`);
-    }
-  };
 
   const formHandler = async (data) => {
     console.log(data);
@@ -138,7 +129,7 @@ export default function GenerateContent() {
                 </div>
                 <div className="flex gap-3">
                   <button
-                    onClick={handleCopy}
+                    onClick={() => handleCopy(generatedContent)}
                     className="flex-1 bg-indigo-600 text-white py-2.5 px-4 rounded-lg font-semibold text-sm hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2"
                   >
                     <Copy style="w-4 h-4" />

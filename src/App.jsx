@@ -12,6 +12,7 @@ import Content from "./page/Content";
 import Image from "./page/Image";
 import { AuthProvider } from "./context/auth";
 import ProtectedRoute from "./component/ProtectedRoute";
+import Home from "./page/Home";
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
       <AuthProvider>
         <Nav />
         <Routes>
-          <Route path="/" element={<div>home</div>}></Route>
+          <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<SignUp />}></Route>
           <Route

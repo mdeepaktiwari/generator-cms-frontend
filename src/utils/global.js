@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { COLOR_MAP, DEFAULT_COLOR_TYPE } from "../constant";
 
 export const downloadImage = async (image) => {
@@ -24,4 +25,14 @@ export const capitalizeWord = (str) => {
 
 export const getColorType = (type) => {
   return COLOR_MAP[type] || COLOR_MAP[DEFAULT_COLOR_TYPE];
+};
+
+export const handleCopy = async (content) => {
+  if (!content) return;
+  try {
+    await window.navigator.clipboard.writeText(content);
+    toast.success("Content copied");
+  } catch (error) {
+    console.log(`Failed to copy. Error is ${error}`);
+  }
 };

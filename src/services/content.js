@@ -20,3 +20,7 @@ export const generateArticle = (data) => {
 export const contentHistory = () => {
   return api.get("/v1/content/history");
 };
+
+export const contentWithId = (id) => {
+  return api.get(`/v1/content/${id}`);
+};
