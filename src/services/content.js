@@ -17,10 +17,20 @@ export const generateArticle = (data) => {
   return api.post("/v1/content/article", data);
 };
 
+export const generateSeoContent = (data) => {
+  return api.post("/v1/content/seo-content", data);
+};
+
 export const contentHistory = () => {
   return api.get("/v1/content/history");
 };
 
 export const contentWithId = (id) => {
   return api.get(`/v1/content/${id}`);
+};
+
+export const searchContent = (query) => {
+  return api.get(`/v1/content/search`, {
+    params: { query },
+  });
 };

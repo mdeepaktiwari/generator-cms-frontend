@@ -17,12 +17,11 @@ const Card = ({ feature }) => {
           <p className="text-white/90">{feature.description}</p>
         </div>
         <div className="p-6">
-          <Link
-            to={feature.link}
+          <button
             className={`bg-gradient-to-br ${feature.gradient} px-6 py-3 rounded-lg text-white w-full block text-center font-semibold hover:opacity-90 transition-opacity`}
           >
             Get Started →
-          </Link>
+          </button>
         </div>
       </div>
     </Link>

@@ -27,6 +27,15 @@ const contentFeatures = [
     gradient: "from-orange-600 to-stone-400",
   },
   {
+    id: "seo-content",
+    link: "/content/seo-content",
+    title: "SEO content",
+    description:
+      "Automatically generate SEO title, keyword, and meta description",
+    icon: <ListIcon style="w-6 h-6 text-cyan-600" />,
+    gradient: "from-cyan-500 to-pink-500",
+  },
+  {
     id: "generate-article",
     link: "/content/generate-article",
     title: "Generate Article",
