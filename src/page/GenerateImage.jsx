@@ -32,7 +32,6 @@ export default function GenerateImage() {
   });
 
   const formHandler = async (data) => {
-    console.log(data);
     setIsSubmitting(true);
     setError(null);
     setGeneratedImage(null);

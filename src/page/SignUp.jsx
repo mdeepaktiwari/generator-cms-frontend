@@ -44,7 +44,6 @@ export default function SignUp() {
   }, [isAuthenticated, navigate]);
 
   const submitHandler = async (data) => {
-    console.log(data);
     setIsSubmitting(true);
     try {
       await signUp(data);

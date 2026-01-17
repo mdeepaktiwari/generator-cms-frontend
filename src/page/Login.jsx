@@ -44,7 +44,6 @@ export default function Login() {
   }, [isAuthenticated, navigate]);
 
   const submitHandler = async (data) => {
-    console.log(data);
     setIsSubmitting(true);
     try {
       const { data: res } = await signIn(data);

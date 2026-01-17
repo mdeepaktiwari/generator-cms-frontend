@@ -33,7 +33,6 @@ export default function GenerateContent() {
   });
 
   const formHandler = async (data) => {
-    console.log(data);
     setIsSubmitting(true);
     setError(null);
     setGeneratedContent(null);
