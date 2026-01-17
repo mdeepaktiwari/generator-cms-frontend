@@ -21,7 +21,7 @@ export default function ContentDetails() {
       setIsLoading(true);
       setError(null);
 
-      const res = await contentWithId(id);
+      const { data: res } = await contentWithId(id);
       setContent(res?.data?.content);
     } catch (error) {
       console.log("Error in fetching content details: ", error);
@@ -66,7 +66,7 @@ export default function ContentDetails() {
                 </h1>
                 <span
                   className={`text-xs font-semibold px-3 py-1 rounded-full ${getColorType(
-                    content.type
+                    content.type,
                   )}`}
                 >
                   {capitalizeWord(content?.type)}

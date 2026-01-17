@@ -18,7 +18,7 @@ export default function ImageHistory() {
     try {
       setIsLoading(true);
       setError(null);
-      const res = await imageHistory();
+      const { data: res } = await imageHistory();
       setGeneratedImages(res?.data?.images);
     } catch (error) {
       console.error("Error in fetching image history", error);

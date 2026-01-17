@@ -1,18 +1,21 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SignUp from "./page/SignUp";
-import Login from "./page/Login";
 import { Flip, ToastContainer } from "react-toastify";
-import GenerateImage from "./page/GenerateImage";
-import GenerateContent from "./page/GenerateContent";
-import ImageHistory from "./page/ImageHistory";
-import ContentHistory from "./page/ContentHistory";
-import ContentDetails from "./page/ContentDetails";
 import Nav from "./component/Nav";
-import Content from "./page/Content";
-import Image from "./page/Image";
 import { AuthProvider } from "./context/auth";
 import ProtectedRoute from "./component/ProtectedRoute";
-import Home from "./page/Home";
+import { lazy, Suspense } from "react";
+import LoadingSpinner from "./component/LoadingSpinner";
+
+const Home = lazy(() => import("./page/Home"));
+const Image = lazy(() => import("./page/Image"));
+const Content = lazy(() => import("./page/Content"));
+const SignUp = lazy(() => import("./page/SignUp"));
+const Login = lazy(() => import("./page/Login"));
+const GenerateImage = lazy(() => import("./page/GenerateImage"));
+const GenerateContent = lazy(() => import("./page/GenerateContent"));
+const ImageHistory = lazy(() => import("./page/ImageHistory"));
+const ContentHistory = lazy(() => import("./page/ContentHistory"));
+const ContentDetails = lazy(() => import("./page/ContentDetails"));
 
 function App() {
   return (
@@ -32,67 +35,69 @@ function App() {
       />
       <AuthProvider>
         <Nav />
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/register" element={<SignUp />}></Route>
-          <Route
-            path="/image"
-            element={
-              <ProtectedRoute>
-                <Image />
-              </ProtectedRoute>
-            }
-          ></Route>
-          <Route
-            path="/image/generate"
-            element={
-              <ProtectedRoute>
-                <GenerateImage />
-              </ProtectedRoute>
-            }
-          ></Route>
-          <Route
-            path="/image/history"
-            element={
-              <ProtectedRoute>
-                <ImageHistory />
-              </ProtectedRoute>
-            }
-          ></Route>
-          <Route
-            path="/content"
-            element={
-              <ProtectedRoute>
-                <Content />
-              </ProtectedRoute>
-            }
-          ></Route>
-          <Route
-            path="/content/:action"
-            element={
-              <ProtectedRoute>
-                <GenerateContent />
-              </ProtectedRoute>
-            }
-          ></Route>
-          <Route
-            path="/content/history"
-            element={
-              <ProtectedRoute>
-                <ContentHistory />
-              </ProtectedRoute>
-            }
-          ></Route>
-          <Route
-            path="content-details/:id"
-            element={
-              <ProtectedRoute>
-                <ContentDetails />
-              </ProtectedRoute>
-            }
-          ></Route>
-        </Routes>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/register" element={<SignUp />}></Route>
+            <Route
+              path="/image"
+              element={
+                <ProtectedRoute>
+                  <Image />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/image/generate"
+              element={
+                <ProtectedRoute>
+                  <GenerateImage />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/image/history"
+              element={
+                <ProtectedRoute>
+                  <ImageHistory />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/content"
+              element={
+                <ProtectedRoute>
+                  <Content />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/content/:action"
+              element={
+                <ProtectedRoute>
+                  <GenerateContent />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="/content/history"
+              element={
+                <ProtectedRoute>
+                  <ContentHistory />
+                </ProtectedRoute>
+              }
+            ></Route>
+            <Route
+              path="content-details/:id"
+              element={
+                <ProtectedRoute>
+                  <ContentDetails />
+                </ProtectedRoute>
+              }
+            ></Route>
+          </Routes>
+        </Suspense>
       </AuthProvider>
     </BrowserRouter>
   );

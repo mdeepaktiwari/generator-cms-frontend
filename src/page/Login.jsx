@@ -18,7 +18,7 @@ const schema = z.object({
     .regex(/[0-9]/, "Password must contain at least one number")
     .regex(
       /[^A-Za-z0-9]/,
-      "Password must contain at least one special character"
+      "Password must contain at least one special character",
     ),
 });
 
@@ -47,7 +47,7 @@ export default function Login() {
     console.log(data);
     setIsSubmitting(true);
     try {
-      const res = await signIn(data);
+      const { data: res } = await signIn(data);
       const token = res?.data?.token;
       const name = res?.data?.name;
       if (token) {

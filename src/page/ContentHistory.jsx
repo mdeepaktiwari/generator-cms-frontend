@@ -24,7 +24,7 @@ export default function ContentHistory() {
     try {
       setIsLoading(true);
       setError(null);
-      const res = await contentHistory();
+      const { data: res } = await contentHistory();
       setContentItems(res?.data?.content);
       setIsSearchMode(false);
     } catch (error) {
@@ -43,7 +43,7 @@ export default function ContentHistory() {
     try {
       setIsSearching(true);
       setError(null);
-      const res = await searchContent(searchQuery.trim());
+      const { data: res } = await searchContent(searchQuery.trim());
       setContentItems(res?.data?.content || []);
       setIsSearchMode(true);
     } catch (error) {
@@ -205,7 +205,7 @@ export default function ContentHistory() {
                     <div className="flex items-center gap-3">
                       <span
                         className={`text-xs font-semibold px-3 py-1 rounded-full ${getColorType(
-                          item?.type
+                          item?.type,
                         )}`}
                       >
                         {capitalizeWord(item?.type)}

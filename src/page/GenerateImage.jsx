@@ -38,7 +38,7 @@ export default function GenerateImage() {
     setGeneratedImage(null);
 
     try {
-      const res = await generateImage(data);
+      const { data: res } = await generateImage(data);
       setGeneratedImage(res?.data?.image);
     } catch (error) {
       console.log("Error in generating image: ".error);
